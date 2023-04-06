@@ -5,7 +5,7 @@ import { ReactComponent as ChartIcon } from '../../assets/chart.svg';
 import { ReactComponent as ActivityIcon } from '../../assets/activity.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg';
-import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
+// import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 
 export const Menu = () => {
   return (
@@ -14,7 +14,7 @@ export const Menu = () => {
 
       <Container>
 
-        <ContainerTitle>MANAGE</ContainerTitle>
+        <ContainerTitle>GERAL</ContainerTitle>
         
         <ContainerOption>
           <DashboardIcon />
@@ -23,48 +23,49 @@ export const Menu = () => {
 
         <ContainerOption>
           <WalletIcon />
-          <p>My Cards</p>
+          <p>Cartões</p>
         </ContainerOption>
 
         <ContainerOption>
           <ChartIcon />
-          <p>Statistic</p>
+          <p>Métricas</p>
         </ContainerOption>
 
         <ContainerOption>
           <ActivityIcon />
-          <p>Activity</p>
+          <p>Atividade</p>
         </ContainerOption>
 
         <ContainerOption>
           <CalendarIcon />
-          <p>Calendar</p>
+          <p>Calendário</p>
         </ContainerOption>
 
       </Container>
 
       <Container>
 
-        <ContainerTitle>PREFERENCES</ContainerTitle>
+        <ContainerTitle>PREFERÊNCIAS</ContainerTitle>
 
         <ContainerOption>
           <SettingsIcon />
-          <p>Settings</p>
+          <p>Configurações</p>
         </ContainerOption>
 
       </Container>
-
+      
+      {/* 
       <LogoutContainer>
         <LogoutIcon />
         <p>Logout</p>
-      </LogoutContainer>
+      </LogoutContainer> */}
 
     </Aside>
   )
 }
 
 const Aside = styled.aside`
-  height: 100%;
+  height: 94.5vh;
   width: 18vw;
   padding: 1rem;
   border: 1px solid black;
@@ -74,7 +75,8 @@ const Aside = styled.aside`
 const Logo = styled.div`
   height: 5rem;
   width: 18vw;
-  background-color: black;
+  background-color: white;
+  border: 1px solid black;
 `
 
 const ContainerTitle = styled.p`
@@ -142,7 +144,7 @@ const LogoutContainer = styled.div`
   margin: 0 auto;
   cursor: pointer;
   align-items: center;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
   justify-content: center;
 
   &:hover {
