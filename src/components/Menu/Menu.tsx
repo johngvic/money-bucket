@@ -6,6 +6,7 @@ import { ReactComponent as ActivityIcon } from '../../assets/activity.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg';
 // import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
+import { Link } from 'react-router-dom';
 
 export const Menu = () => {
   return (
@@ -13,45 +14,39 @@ export const Menu = () => {
       <Logo />
 
       <Container>
-
-        <ContainerTitle>GERAL</ContainerTitle>
-        
-        <ContainerOption>
+        <Title>GERAL</Title>
+        <Option to='/'>
           <DashboardIcon />
           <p>Dashboard</p>
-        </ContainerOption>
+        </Option>
 
-        <ContainerOption>
-          <WalletIcon />
-          <p>Cartões</p>
-        </ContainerOption>
-
-        <ContainerOption>
-          <ChartIcon />
-          <p>Métricas</p>
-        </ContainerOption>
-
-        <ContainerOption>
+        <Option to='/activity'>
           <ActivityIcon />
           <p>Atividade</p>
-        </ContainerOption>
+        </Option>
 
-        <ContainerOption>
+        <Option to='/metrics'>
+          <ChartIcon />
+          <p>Métricas</p>
+        </Option>
+
+        <Option to='/wallet'>
+          <WalletIcon />
+          <p>Cartões</p>
+        </Option>
+
+        <Option to='/calendar'>
           <CalendarIcon />
           <p>Calendário</p>
-        </ContainerOption>
-
+        </Option>
       </Container>
 
       <Container>
-
-        <ContainerTitle>PREFERÊNCIAS</ContainerTitle>
-
-        <ContainerOption>
+        <Title>PREFERÊNCIAS</Title>
+        <Option to='/settings'>
           <SettingsIcon />
           <p>Configurações</p>
-        </ContainerOption>
-
+        </Option>
       </Container>
       
       {/* 
@@ -59,12 +54,12 @@ export const Menu = () => {
         <LogoutIcon />
         <p>Logout</p>
       </LogoutContainer> */}
-
     </Aside>
   )
 }
 
 const Aside = styled.aside`
+  display: block;
   height: 94.5vh;
   width: 18vw;
   padding: 1rem;
@@ -79,7 +74,7 @@ const Logo = styled.div`
   border: 1px solid black;
 `
 
-const ContainerTitle = styled.p`
+const Title = styled.p`
   text-align: left;
   margin-left: 1.5rem;
   padding-top: 1rem;
@@ -98,7 +93,7 @@ const Container = styled.div`
   transition: all 350ms ease-out;
 `
 
-const ContainerOption = styled.div`
+const Option = styled(Link)`
   display: flex;
   width: 15vw;
   margin: 1rem auto;
@@ -109,6 +104,7 @@ const ContainerOption = styled.div`
   border: 1px solid #c2bfbf;
   border-radius: .3rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  text-decoration: none;
 
   &:hover {
     border: 1px solid #888888;
