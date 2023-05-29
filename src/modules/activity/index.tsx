@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Menu } from "../../components/Menu";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
@@ -11,13 +12,10 @@ const Accordion = MuiStyled((props) => (
   <MuiAccordion children={[]} disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
+  marginBottom: '1rem',
   borderRadius: '.5rem',
   width: '95%',
   fontWeight: '1rem',
-  // backgroundColor: 'red',
-  '&:not(:last-child)': {
-    borderBottom: 0,
-  },
   '&:before': {
     display: 'none',
   },
@@ -50,6 +48,12 @@ const AccordionDetails = MuiStyled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export const Activity = () => {
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   return (
     <Outer>
       <Menu />
@@ -57,11 +61,10 @@ export const Activity = () => {
       <Container>
         <TitleContainer>
           <Title>Atividade</Title>
-          <Description>Veja o que você pode fazer hoje</Description>
         </TitleContainer>
 
         <AccordionContainer>
-          <Accordion expanded={false} onChange={() => console.log('any')}>
+          <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
             <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
               <Typography>Adicionar categoria</Typography>
             </AccordionSummary>
@@ -75,9 +78,23 @@ export const Activity = () => {
             </AccordionDetails>
           </Accordion>
 
-          <Accordion expanded={false} onChange={() => console.log('any')}>
+          <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
             <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
               <Typography>Adicionar forma de pagamento</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                sit amet blandit leo lobortis eget.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+
+          <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+            <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+              <Typography>Adicionar transação</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
@@ -100,7 +117,7 @@ const Outer = styled.div`
 
 const Container = styled.div`
   position: absolute;
-  background-color: green;
+  /* background-color: green; */
   margin-left: 18.5rem;
   margin-top: 1rem;
   width: 77%;
