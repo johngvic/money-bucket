@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as DashboardIcon } from '../../assets/dashboard.svg';
 import { ReactComponent as WalletIcon } from '../../assets/wallet.svg';
 import { ReactComponent as ChartIcon } from '../../assets/chart.svg';
-import { ReactComponent as ActivityIcon } from '../../assets/activity.svg';
+import { ReactComponent as ManagementIcon } from '../../assets/manegement.svg';
 import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg';
 // import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
@@ -20,9 +20,9 @@ export const Menu = () => {
           <p>Dashboard</p>
         </Option>
 
-        <Option to='/activity'>
-          <ActivityIcon />
-          <p>Atividade</p>
+        <Option to='/management'>
+          <ManagementIcon />
+          <p>Gestão</p>
         </Option>
 
         <Option to='/metrics'>

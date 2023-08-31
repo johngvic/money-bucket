@@ -5,7 +5,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import { Activity } from './modules/activity';
+import { Management } from './modules/management';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Menu />}/>
-          <Route path="/activity" element={<Activity />}/>
+          <Route path="/management" element={<Management />}/>
           <Route path="*" element={<Menu />}/>
         </Routes>
       </Router>
