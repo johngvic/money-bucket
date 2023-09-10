@@ -1,12 +1,15 @@
 import styled from 'styled-components';
-import { InputField, Button, ComboBox } from "../../../../components";
+import { TextField, Button, ComboBox, DatePicker, CurrencyField } from '../../../../components';
 import { useState } from 'react';
 
-type TransactionProps = {}
-
 export const Transaction = () => {
-  const [categoryName, setCategoryName] = useState('');
-  const options = [
+  const [title, setTitle] = useState('');
+  const [type, setType] = useState('');
+  const [category, setCategory] = useState('');
+  const [date, setDate] = useState('');
+  const [value, setValue] = useState<string | undefined>('');
+  const [financeInstitution, setFinanceInstitution] = useState<string>('');
+  const transactionTypeOptions = [
     {
       value: 'input',
       label: 'Entrada'
@@ -17,6 +20,9 @@ export const Transaction = () => {
     },
   ]
 
+  const categoryOptions = [{ value: 'xpto', label: 'XPTO' }];
+  const financeInstitutionsOptions = [{ value: 'inter', label: 'Banco Inter' }];
+
   const handleSubmit = () => {
     //TODO: submit transaction to backend
   }
@@ -25,16 +31,37 @@ export const Transaction = () => {
     <Container>
       <FieldsContainer>
         <InputContainer>
-          <Label>Nome</Label>
-          <InputField onChange={setCategoryName}/>
+          <Label>Titulo</Label>
+          <TextField onChange={setTitle}/>
         </InputContainer>
 
         <InputContainer>
           <Label>Tipo</Label>
-          <ComboBox options={options} />
+          <ComboBox options={transactionTypeOptions} onChange={setType} />
+        </InputContainer>
+
+        <InputContainer>
+          <Label>Categoria</Label>
+          <ComboBox options={categoryOptions} onChange={setCategory} />
         </InputContainer>
       </FieldsContainer>
 
+      <FieldsContainer>
+        <InputContainer>
+          <Label>Data</Label>
+          <DatePicker onChange={setDate}/>
+        </InputContainer>
+
+        <InputContainer>
+          <Label>Valor</Label>
+          <CurrencyField onChange={setValue}/>
+        </InputContainer>
+
+        <InputContainer>
+          <Label>Instituição</Label>
+          <ComboBox options={financeInstitutionsOptions} onChange={setFinanceInstitution} />
+        </InputContainer>
+      </FieldsContainer>
       <Button title="Enviar" onClick={handleSubmit} />
     </Container>
   );
@@ -47,10 +74,10 @@ const Container = styled.div`
 
 const FieldsContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 60rem;
   flex-wrap: wrap;
-  justify-content: safe;
+  justify-content: space-between;
   margin-bottom: 2rem;
 `;
 
@@ -59,9 +86,9 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* :nth-child(n + 2) {
+  :nth-child(n + 2) {
     margin-left: 1rem;
-  } */
+  }
 `;
 
 const Label = styled.span`

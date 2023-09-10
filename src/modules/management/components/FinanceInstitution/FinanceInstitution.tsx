@@ -1,14 +1,12 @@
-import styled from "styled-components";
-import { TextField, Button } from "../../../../components";
-import { useState } from "react";
+import styled from 'styled-components';
+import { TextField, Button } from '../../../../components';
+import { useState } from 'react';
 
-type CategoryProps = {}
-
-export const Category = () => {
-  const [categoryName, setCategoryName] = useState('');
+export const FinanceInstitution = () => {
+  const [name, setName] = useState('');
 
   const handleSubmit = () => {
-    //TODO: submit category to backend
+    //TODO: submit transaction to backend
   }
 
   return (
@@ -16,14 +14,13 @@ export const Category = () => {
       <FieldsContainer>
         <InputContainer>
           <Label>Nome</Label>
-          <TextField onChange={setCategoryName}/>
+          <TextField onChange={setName} value={name}/>
         </InputContainer>
       </FieldsContainer>
-
       <Button title="Enviar" onClick={handleSubmit} />
     </Container>
   );
-};
+}
 
 const Container = styled.div`
   display: flex;
@@ -35,7 +32,7 @@ const FieldsContainer = styled.div`
   flex-direction: row;
   width: 60rem;
   flex-wrap: wrap;
-  justify-content: safe;
+  justify-content: space-between;
   margin-bottom: 2rem;
 `;
 

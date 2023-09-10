@@ -1,27 +1,26 @@
 import styled from 'styled-components';
 
-interface InputFieldProps {
+interface TextFieldProps {
   value?: string;
   disabled?: boolean;
   isOptional?: boolean;
-  onChange?(value: string): void;
-  type?: 'text' | 'number';
+  onChange(value: string): void;
 }
 
-export const InputField = ({ ...props }: InputFieldProps) => {
+export const TextField = ({ value, disabled, onChange }: TextFieldProps) => {
   return (
-    <Input
+    <Text
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-        props.onChange?.(event.target.value);
+        onChange?.(event.target.value);
       }}
-      disabled={props.disabled}
-      type={props.type}
-      value={props.value}
+      disabled={disabled}
+      type='text'
+      value={value}
     />
   );
 };
 
-const Input = styled.input`
+const Text = styled.input`
   outline: none;
   width: 15rem;
   height: 1.25rem;
@@ -29,4 +28,5 @@ const Input = styled.input`
   border-color: #7a7979;
   border-width: 1px;
   border-radius: .25rem;
+  font-family: 'Gilroy-Medium';
 `;

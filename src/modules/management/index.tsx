@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Accordion, Menu } from '../../components';
-import { Category, Transaction } from './components';
+import { Category, FinanceInstitution, Transaction } from './components';
 import styled from 'styled-components';
 
 export const Management = () => {
@@ -29,10 +29,12 @@ export const Management = () => {
           </Accordion>
 
           <Accordion
-            summary='Adicionar forma de pagamento'
+            summary='Adicionar instituição financeira'
             expanded={expanded === 'panel3'}
             onChange={handleChange('panel3')}
-          />
+          >
+            <FinanceInstitution />
+          </Accordion>
 
           <Accordion
             summary='Adicionar transação'

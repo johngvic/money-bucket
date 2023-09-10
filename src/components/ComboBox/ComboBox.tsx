@@ -1,17 +1,23 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-type Option = {
+export type ComboBoxOption = {
   value: string;
   label: string;
 };
 
 type ComboBoxProps = {
-  options: Option[];
+  onChange(value: string): void;
+  options: ComboBoxOption[];
 };
 
-export const ComboBox = ({ options }: ComboBoxProps) => {
+export const ComboBox = ({ onChange, options }: ComboBoxProps) => {
   return (
-    <Combo>
+    <Combo
+      onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+        onChange?.(event.target.value);
+      }}
+    >
+      <option value=''>Selecione uma opção</option>
       {options.map((option) => (
         <option value={option.value}>{option.label}</option>
       ))}
@@ -22,9 +28,10 @@ export const ComboBox = ({ options }: ComboBoxProps) => {
 const Combo = styled.select`
   outline: none;
   width: 16.5rem;
-  height: 2rem;
+  height: 1.9rem;
   padding: 0.25rem 0.3rem;
   border-color: #7a7979;
   border-width: 1px;
   border-radius: 0.25rem;
+  font-family: 'Gilroy-Medium';
 `;
