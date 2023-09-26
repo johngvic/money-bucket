@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import { TextField, Button } from '../../../../components';
 import { useState } from 'react';
+import { useServices } from '../../../../services/provider';
 
 export const FinanceInstitution = () => {
-  const [name, setName] = useState('');
+  const [financeInstitutionName, setFinanceInstitutionName] = useState('');
+  const { moneyBucketService } = useServices();
 
-  const handleSubmit = () => {
-    //TODO: submit transaction to backend
+  const handleSubmit = async () => {
+    await moneyBucketService.addFinanceInstitution(financeInstitutionName);
+    setFinanceInstitutionName('');
   }
 
   return (
@@ -14,7 +17,7 @@ export const FinanceInstitution = () => {
       <FieldsContainer>
         <InputContainer>
           <Label>Nome</Label>
-          <TextField onChange={setName} value={name}/>
+          <TextField onChange={setFinanceInstitutionName} value={financeInstitutionName}/>
         </InputContainer>
       </FieldsContainer>
       <Button title="Enviar" onClick={handleSubmit} />

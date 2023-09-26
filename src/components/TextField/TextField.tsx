@@ -5,18 +5,25 @@ interface TextFieldProps {
   disabled?: boolean;
   isOptional?: boolean;
   onChange(value: string): void;
+  error?: string;
 }
 
-export const TextField = ({ value, disabled, onChange }: TextFieldProps) => {
+export const TextField = ({ value, disabled, onChange, error }: TextFieldProps) => {
   return (
-    <Text
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange?.(event.target.value);
-      }}
-      disabled={disabled}
-      type='text'
-      value={value}
-    />
+    <>
+      <Text
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          onChange?.(event.target.value);
+        }}
+        disabled={disabled}
+        type='text'
+        value={value}
+      />
+      {
+        error &&
+        <ErrorMessage>{ error }</ErrorMessage>
+      }
+    </>
   );
 };
 
@@ -30,3 +37,9 @@ const Text = styled.input`
   border-radius: .25rem;
   font-family: 'Gilroy-Medium';
 `;
+
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 13px;
+  margin-top: .3rem;
+`
