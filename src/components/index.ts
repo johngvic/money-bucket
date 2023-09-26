@@ -5,3 +5,4 @@ export { Menu } from './Menu';
 export { ComboBox } from './ComboBox';
 export { DatePicker } from './DatePicker';
 export { CurrencyField } from './CurrencyField';
+export type { ComboBoxOption } from './ComboBox';

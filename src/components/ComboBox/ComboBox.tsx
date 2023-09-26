@@ -6,20 +6,23 @@ export type ComboBoxOption = {
 };
 
 type ComboBoxProps = {
+  placeholder?: string;
+  value?: string;
   onChange(value: string): void;
   options: ComboBoxOption[];
 };
 
-export const ComboBox = ({ onChange, options }: ComboBoxProps) => {
+export const ComboBox = ({ placeholder, value, onChange, options }: ComboBoxProps) => {
   return (
     <Combo
       onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
         onChange?.(event.target.value);
       }}
+      value={value}
     >
-      <option value=''>Selecione uma opção</option>
-      {options.map((option) => (
-        <option value={option.value}>{option.label}</option>
+      <option value=''>{ placeholder ?? 'Selecione uma opção' }</option>
+      {options.map((option, index) => (
+        <option key={index} value={option.value}>{option.label}</option>
       ))}
     </Combo>
   );

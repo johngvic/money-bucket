@@ -3,9 +3,10 @@ import CurrencyInput from 'react-currency-input-field';
 
 type CurrencyFieldProps = {
   onChange(value?: string, name?: string): void;
+  value: string;
 }
 
-export const CurrencyField = ({ onChange }: CurrencyFieldProps) => {
+export const CurrencyField = ({ onChange, value }: CurrencyFieldProps) => {
   const brazilianPrefix = 'R$';
 
   return (
@@ -16,6 +17,8 @@ export const CurrencyField = ({ onChange }: CurrencyFieldProps) => {
       decimalSeparator=','
       onValueChange={onChange}
       prefix={brazilianPrefix}
+      allowDecimals
+      value={value}
     />
   )
 }

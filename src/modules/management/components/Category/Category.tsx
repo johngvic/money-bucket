@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { TextField, Button } from "../../../../components";
 import { useState } from "react";
-
-type CategoryProps = {}
+import { useServices } from "../../../../services/provider";
 
 export const Category = () => {
   const [categoryName, setCategoryName] = useState('');
+  const { moneyBucketService } = useServices();
 
-  const handleSubmit = () => {
-    //TODO: submit category to backend
+  const handleSubmit = async () => {
+    await moneyBucketService.addCategory(categoryName);
+    setCategoryName('');
   }
 
   return (
@@ -16,7 +17,7 @@ export const Category = () => {
       <FieldsContainer>
         <InputContainer>
           <Label>Nome</Label>
-          <TextField onChange={setCategoryName}/>
+          <TextField onChange={setCategoryName} value={categoryName}/>
         </InputContainer>
       </FieldsContainer>
 

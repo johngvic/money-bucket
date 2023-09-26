@@ -1,30 +1,79 @@
 import styled from 'styled-components';
-import { TextField, Button, ComboBox, DatePicker, CurrencyField } from '../../../../components';
-import { useState } from 'react';
+import {
+  TextField,
+  Button,
+  ComboBox,
+  DatePicker,
+  CurrencyField,
+  ComboBoxOption
+} from '../../../../components';
+import { useState, useEffect } from 'react';
+import { useServices } from '../../../../services/provider';
+import { TransactionInfo } from '../../../../services/MoneyBucketBffClient';
 
 export const Transaction = () => {
-  const [title, setTitle] = useState('');
-  const [type, setType] = useState('');
-  const [category, setCategory] = useState('');
-  const [date, setDate] = useState('');
-  const [value, setValue] = useState<string | undefined>('');
-  const [financeInstitution, setFinanceInstitution] = useState<string>('');
+  const { moneyBucketService } = useServices();
+  const emptyTransaction = {
+    title: '',
+    category: '',
+    date: new Date(),
+    financeInstitution: '',
+    type: '',
+    value: 0
+  };
+  const [transactionInfo, setTransactionInfo] = useState<TransactionInfo>(emptyTransaction);
+  const [financeInstitutionOptions, setFinanceInstitutionOptions] = useState<ComboBoxOption[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<ComboBoxOption[]>([]);
   const transactionTypeOptions = [
     {
       value: 'input',
-      label: 'Entrada'
+      label: 'Receita'
     },
     {
       value: 'output',
-      label: 'Saída'
+      label: 'Despesa'
     },
   ]
 
-  const categoryOptions = [{ value: 'xpto', label: 'XPTO' }];
-  const financeInstitutionsOptions = [{ value: 'inter', label: 'Banco Inter' }];
+  useEffect(() => {
+    const getFinanceInstitutions = async () => {
+      const financeInstitutions = await moneyBucketService.fetchFinanceInstitutions();
+      const parsedFinanceInstitutions = financeInstitutions.map((value) => ({ label: value.name, value: value.id }));
+      setFinanceInstitutionOptions(parsedFinanceInstitutions);
+    };
 
-  const handleSubmit = () => {
-    //TODO: submit transaction to backend
+    const getCategories = async () => {
+      const categories = await moneyBucketService.fetchCategories();
+      const parsedCategories = categories.map((value) => ({ label: value.name, value: value.id }));
+      setCategoryOptions(parsedCategories);
+    };
+  
+    getCategories();
+    getFinanceInstitutions();
+  
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSubmit = async () => {
+    cleanup();
+    if (allFieldsValid()) {
+      const valueConverted = Number(transactionInfo.value?.toString().replace(',', '.'))
+      await moneyBucketService.addTransaction({ ...transactionInfo, value: valueConverted });
+      setTransactionInfo(emptyTransaction);
+    }
+  }
+
+  const [titleError, setTitleError] = useState<string | undefined>();
+  const allFieldsValid = () => {
+    if (transactionInfo.title === '') {
+      setTitleError('Título não pode ser vazio');
+    }
+    return true;
+  }
+
+  const cleanup = () => {
+    setTitleError(undefined);
   }
 
   return (
@@ -32,37 +81,60 @@ export const Transaction = () => {
       <FieldsContainer>
         <InputContainer>
           <Label>Titulo</Label>
-          <TextField onChange={setTitle}/>
+          <TextField
+            onChange={(title) => setTransactionInfo((old) => ({ ...old, title }))}
+            value={transactionInfo.title}
+            error={titleError}
+          />
         </InputContainer>
 
         <InputContainer>
           <Label>Tipo</Label>
-          <ComboBox options={transactionTypeOptions} onChange={setType} />
+          <ComboBox
+            options={transactionTypeOptions}
+            onChange={(type) => setTransactionInfo((old) => ({ ...old, type }))}
+            value={transactionInfo.type}
+          />
         </InputContainer>
 
         <InputContainer>
           <Label>Categoria</Label>
-          <ComboBox options={categoryOptions} onChange={setCategory} />
+          <ComboBox
+            options={categoryOptions}
+            onChange={(category) => setTransactionInfo((old) => ({ ...old, category }))}
+            value={transactionInfo.category}
+          />
         </InputContainer>
-      </FieldsContainer>
+      {/* </FieldsContainer> */}
 
-      <FieldsContainer>
+      {/* <FieldsContainer> */}
         <InputContainer>
           <Label>Data</Label>
-          <DatePicker onChange={setDate}/>
+          <DatePicker
+            onChange={(date) => setTransactionInfo((old) => ({ ...old, date: new Date(date) }))}
+          />
         </InputContainer>
 
         <InputContainer>
           <Label>Valor</Label>
-          <CurrencyField onChange={setValue}/>
+          <CurrencyField
+            onChange={(value) => setTransactionInfo((old) => ({ ...old, value }))}
+            value={transactionInfo.value?.toString()!}
+          />
         </InputContainer>
 
         <InputContainer>
-          <Label>Instituição</Label>
-          <ComboBox options={financeInstitutionsOptions} onChange={setFinanceInstitution} />
+          <Label>Instituição Financeira</Label>
+          <ComboBox
+            options={financeInstitutionOptions}
+            onChange={(financeInstitution) => setTransactionInfo((old) => ({ ...old, financeInstitution }))}
+            value={transactionInfo.financeInstitution}
+          />
         </InputContainer>
       </FieldsContainer>
-      <Button title="Enviar" onClick={handleSubmit} />
+      <ButtonContainer>
+        <Button size="medium" title="Enviar" onClick={handleSubmit} />
+      </ButtonContainer>
     </Container>
   );
 }
@@ -75,7 +147,7 @@ const Container = styled.div`
 const FieldsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 60rem;
+  width: auto;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -85,11 +157,16 @@ const InputContainer = styled.div`
   text-align: left;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1.5rem;
 
-  :nth-child(n + 2) {
+  /* :nth-child(n + 2) {
     margin-left: 1rem;
-  }
+  } */
 `;
+
+const ButtonContainer = styled.div`
+
+`
 
 const Label = styled.span`
   margin-bottom: 0.5rem;

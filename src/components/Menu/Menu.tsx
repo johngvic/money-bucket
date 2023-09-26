@@ -60,9 +60,9 @@ export const Menu = () => {
 
 const Aside = styled.aside`
   display: block;
-  height: 94.5vh;
+  height: 100%;
   width: 18vw;
-  padding: 1rem;
+  padding: 0 1rem;
   border: 1px solid black;
   position: absolute;
 `
@@ -135,33 +135,33 @@ const Option = styled(Link)`
   }
 `
 
-const LogoutContainer = styled.div`
-  display: flex;
-  margin: 0 auto;
-  cursor: pointer;
-  align-items: center;
-  /* margin-top: 3rem; */
-  justify-content: center;
+// const LogoutContainer = styled.div`
+//   display: flex;
+//   margin: 0 auto;
+//   cursor: pointer;
+//   align-items: center;
+//   /* margin-top: 3rem; */
+//   justify-content: center;
 
-  &:hover {
-    transition: all 200ms ease-in;
+//   &:hover {
+//     transition: all 200ms ease-in;
 
-    svg {
-      path {
-        transition: all 200ms ease-in;
-        fill: #0177FB;
-      }
-    }
+//     svg {
+//       path {
+//         transition: all 200ms ease-in;
+//         fill: #0177FB;
+//       }
+//     }
 
-    p {
-      transition: all 200ms ease-in;
-      color: #0177FB;
-    }
-  }
+//     p {
+//       transition: all 200ms ease-in;
+//       color: #0177FB;
+//     }
+//   }
 
-  p {
-    font-size: 1rem;
-    margin-left: .5rem;
-    color: #A5B3CD;
-  }
-`
+//   p {
+//     font-size: 1rem;
+//     margin-left: .5rem;
+//     color: #A5B3CD;
+//   }
+// `
