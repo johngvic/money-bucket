@@ -6,6 +6,11 @@ type LastTransactionsProps = {
 }
 
 export const LastTransactions = ({ transactions }: LastTransactionsProps) => {
+  const shrinkName = (name: string) => {
+    const maxLength = 16;
+    return name.length > maxLength ? name.substring(0, maxLength) + '...' : name;
+  }
+
   return (
     transactions.length > 0 ?
     (<Table>
@@ -17,8 +22,8 @@ export const LastTransactions = ({ transactions }: LastTransactionsProps) => {
 
       {transactions.map((transaction) => (
         <Row>
-          <Data>{ transaction.title }</Data>
-          <Data>{ transaction.date.toLocaleDateString('pt') }</Data>
+          <Data>{ shrinkName(transaction.title) }</Data>
+          <Data>{ new Date(transaction.date).toLocaleDateString('pt') }</Data>
           <MonetaryData value={Number(transaction.value)}>R$ { transaction.value?.toLocaleString('pt') }</MonetaryData>
         </Row>
       ))}

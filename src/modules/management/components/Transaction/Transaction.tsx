@@ -59,6 +59,9 @@ export const Transaction = () => {
     cleanup();
     if (allFieldsValid()) {
       const valueConverted = Number(transactionInfo.value?.toString().replace(',', '.'))
+      // transactionInfo?.date.setHours(3);
+      console.log(transactionInfo)
+
       await moneyBucketService.addTransaction({ ...transactionInfo, value: valueConverted });
       setTransactionInfo(emptyTransaction);
     }
@@ -105,9 +108,7 @@ export const Transaction = () => {
             value={transactionInfo.category}
           />
         </InputContainer>
-      {/* </FieldsContainer> */}
 
-      {/* <FieldsContainer> */}
         <InputContainer>
           <Label>Data</Label>
           <DatePicker

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { DateTime } from 'luxon';
+import { useState } from 'react';
 
 type DatePickerProps = {
   onChange(value: string): void;
@@ -8,12 +9,15 @@ type DatePickerProps = {
 export const DatePicker = ({ onChange }: DatePickerProps) => {
   const minDate = '2023-01-01';
   const maxDate = DateTime.now().setLocale('pt-BR').toISO()?.split('T')[0];
+  const [value, setValue] = useState('');
 
   return (
     <Date
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         onChange?.(event.target.value);
+        setValue(event.target.value);
       }}
+      value={value}
       type='date'
       min={minDate}
       max={maxDate}

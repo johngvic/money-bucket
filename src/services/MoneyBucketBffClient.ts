@@ -18,7 +18,7 @@ export type TransactionInfo = {
   title: string;
   type: string;
   category: string;
-  date: Date;
+  date: Date | string;
   value: number | string | undefined;
   financeInstitution: string;
 }
